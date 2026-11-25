@@ -1,0 +1,56 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   print_bench.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: alexgonz <alexgonz@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/11/10 15:41:28 by alexgonz          #+#    #+#             */
+/*   Updated: 2026/11/18 18:52:28 by alexgonz         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "../includes/push_swap.h"
+
+// prints which sort we're going to use
+
+static void	printf_adaptative(float disorder_metric)
+{
+	ft_printf("[bench] strategy:  Adaptative / ");
+	if (disorder_metric < 20)
+		ft_printf("O(n^2)\n");
+	else if (20 <= disorder_metric && disorder_metric < 50)
+		ft_printf("O(n√n)\n");
+	else
+		ft_printf("O(nlog(n))\n");
+}
+
+// prints all the operations that we have used
+
+static void	print_operations(t_lector registre)
+{
+	ft_printf("[bench] ");
+	ft_printf("total ops: %d\n", registre.num_ops);
+	ft_printf("[bench] ");
+	ft_printf("sa: %d sb: %d ss: %d pa: %d pb: %d\n",
+		registre.sa, registre.sb, registre.ss, registre.pa, registre.pb);
+	ft_printf("[bench] ");
+	ft_printf("ra: %d rb: %d rr: %d rra %d rrb %d rrr: %d\n", registre.ra,
+		registre.rb, registre.rr, registre.rra, registre.rrb, registre.rrr);
+}
+
+// prints the bench
+
+void	print_bench(t_strategy selected, float disorder, t_lector registre)
+{
+	ft_printf("[bench] disorder:  %f%%\n", disorder);
+	if (selected.strat == 1)
+		ft_printf("[bench] strategy:  Simple / O(n^2)\n");
+	else if (selected.strat == 2)
+		ft_printf("[bench] strategy:  Medium / O(n√n)\n");
+	else if (selected.strat == 3)
+		ft_printf("[bench] strategy:  Complex / O(nlog(n))\n");
+	else
+		printf_adaptative(disorder);
+	print_operations(registre);
+}
